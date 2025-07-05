@@ -21,6 +21,7 @@ import Admin from '@/pages/Admin';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import EnhancedAdminDashboard from '@/pages/admin/EnhancedAdminDashboard';
 import ProductsList from '@/pages/admin/ProductsList';
+import FinancialDashboard from '@/pages/admin/FinancialDashboard';
 import AddProduct from '@/pages/admin/AddProduct';
 import EditProduct from '@/pages/admin/EditProduct';
 import OrdersHistory from '@/pages/admin/OrdersHistory';
@@ -79,6 +80,7 @@ function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/enhanced" element={<EnhancedAdminDashboard />} />
+              <Route path="/admin/financial" element={<FinancialDashboard />} />
               <Route path="/admin/products" element={<ProductsList />} />
               <Route path="/admin/add-product" element={<AddProduct />} />
               <Route path="/admin/edit-product/:id" element={<EditProduct />} />
