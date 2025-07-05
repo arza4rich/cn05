@@ -38,6 +38,14 @@ import './App.css';
 import { useEffect } from 'react';
 import { processReferralCode } from '@/utils/referralUtils';
 
+// POS Pages
+import PosLayout from '@/pages/pos/PosLayout';
+import PosDashboard from '@/pages/pos/PosDashboard';
+import PosSales from '@/pages/pos/PosSales';
+import PosProducts from '@/pages/pos/PosProducts';
+import PosTransactions from '@/pages/pos/PosTransactions';
+import PosReceipts from '@/pages/pos/PosReceipts';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -94,6 +102,16 @@ function App() {
               <Route path="/admin/recycle-bin" element={<RecycleBin />} />
               <Route path="/admin/shipping-rates" element={<ShippingRates />} />
               <Route path="/admin/affiliate" element={<AffiliateManagement />} />
+              
+              {/* POS routes */}
+              <Route path="/pos" element={<PosLayout />}>
+                <Route path="/pos/dashboard" element={<PosDashboard />} />
+                <Route path="/pos/sales" element={<PosSales />} />
+                <Route path="/pos/products" element={<PosProducts />} />
+                <Route path="/pos/transactions" element={<PosTransactions />} />
+                <Route path="/pos/receipts" element={<PosReceipts />} />
+                <Route index element={<PosDashboard />} />
+              </Route>
               
               {/* 404 route */}
               <Route path="*" element={<NotFound />} />
