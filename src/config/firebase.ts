@@ -1,9 +1,14 @@
-
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { firebaseConfig } from '@/config/env';
+
+// Declare variables outside try-catch block
+let app: any;
+let auth: any;
+let db: any;
+let storage: any;
 
 // Initialize Firebase
 try {
@@ -13,12 +18,12 @@ try {
     hasApiKey: !!firebaseConfig.apiKey
   });
   
-  const app = initializeApp(firebaseConfig);
+  app = initializeApp(firebaseConfig);
   
   // Initialize Firebase services
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const storage = getStorage(app);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  storage = getStorage(app);
 
   // Use emulators in development if needed
   if (import.meta.env.DEV && window.location.hostname === 'localhost') {
@@ -27,16 +32,13 @@ try {
   }
   
   console.log('Firebase initialized successfully');
-  
-  export { auth, db, storage };
-  export default app;
 } catch (error) {
   console.error('Firebase initialization error:', error);
   
   // Provide fallback implementations to prevent app crashes
-  const dummyApp = {} as any;
-  const dummyAuth = {} as any;
-  const dummyDb = {
+  app = {} as any;
+  auth = {} as any;
+  db = {
     collection: () => ({
       doc: () => ({
         get: () => Promise.resolve({ exists: false, data: () => ({}) }),
@@ -52,10 +54,9 @@ try {
       add: () => Promise.resolve({ id: 'dummy-id' })
     })
   } as any;
-  const dummyStorage = {} as any;
-
-  export const auth = dummyAuth;
-  export const db = dummyDb;
-  export const storage = dummyStorage;
-  export default dummyApp;
+  storage = {} as any;
 }
+
+// Export statements at top level
+export { auth, db, storage };
+export default app;

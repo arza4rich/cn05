@@ -13,12 +13,9 @@ import {
   AffiliateUser, 
   AffiliateSettings,
   AffiliateReferral,
-  onSnapshot,
-  AffiliateCommission
-  getDocs,
-  orderBy,
-  limit
-}
+  AffiliateCommission,
+  AffiliatePayout
+} from '@/types/affiliate';
 import { collection, query, onSnapshot, where, getDocs } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 
