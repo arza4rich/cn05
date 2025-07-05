@@ -7,7 +7,7 @@ export const useOrderOperations = () => {
   const queryClient = useQueryClient();
   const db = getFirestore(); 
 
-  const confirmOrderMutation = useMutation({ 
+  const confirmOrderMutation = useMutation({
     mutationFn: async (orderId: string) => {
       try {
         // Use a transaction to ensure atomic updates
@@ -190,9 +190,19 @@ export const useOrderOperations = () => {
     }
   });
 
+  // Ensure confirmOrder returns a Promise
+  const confirmOrder = (orderId: string) => {
+    return confirmOrderMutation.mutateAsync(orderId);
+  };
+  
+  // Ensure cancelOrder returns a Promise
+  const cancelOrder = (orderId: string) => {
+    return cancelOrderMutation.mutateAsync(orderId);
+  };
+
   return {
-    confirmOrder: confirmOrderMutation.mutate,
-    cancelOrder: cancelOrderMutation.mutate,
+    confirmOrder,
+    cancelOrder,
     isLoading: confirmOrderMutation.isPending || cancelOrderMutation.isPending
   };
 };

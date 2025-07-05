@@ -20,15 +20,31 @@ const OrderConfirmation = ({ order, onConfirmSuccess }: OrderConfirmationProps) 
 
   const handleConfirm = () => {
     setIsConfirming(true);
-    confirmOrder(order.id).then(() => {
-      if (onConfirmSuccess) {
-        onConfirmSuccess();
+    try {
+      const result = confirmOrder(order.id);
+      
+      // Check if result is a Promise
+      if (result && typeof result.then === 'function') {
+        result.then(() => {
+          if (onConfirmSuccess) {
+            onConfirmSuccess();
+          }
+        }).catch(error => {
+          console.error('Error confirming order:', error);
+        }).finally(() => {
+          setIsConfirming(false);
+        });
+      } else {
+        // If not a Promise, handle synchronously
+        if (onConfirmSuccess) {
+          onConfirmSuccess();
+        }
+        setIsConfirming(false);
       }
-    }).catch(error => {
+    } catch (error) {
       console.error('Error confirming order:', error);
-    }).finally(() => {
       setIsConfirming(false);
-    });
+    }
   };
 
   const handleCancel = () => {
