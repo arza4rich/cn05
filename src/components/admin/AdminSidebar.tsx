@@ -10,7 +10,8 @@ import {
   Trash2,
   Truck,
   CreditCard,
-  Percent
+  Percent,
+  TrendingUp
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
