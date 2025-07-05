@@ -12,17 +12,7 @@ import {
   TableHeader, 
   TableRow 
 } from '@/components/ui/table';
-import { 
-  Search, 
-  ShoppingCart, 
-  Plus, 
-  Minus, 
-  Trash2, 
-  CreditCard, 
-  Printer, 
-  CheckCircle,
-  BarcodeScan
-} from 'lucide-react';
+import { Search, ShoppingCart, Plus, Minus, Trash2, CreditCard, Printer, CheckCircle, ScanBarcode as BarcodeScan } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { collection, getDocs, addDoc, doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/config/firebase';
