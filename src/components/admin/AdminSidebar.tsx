@@ -26,8 +26,14 @@ const AdminSidebar = () => {
     {
       title: 'Laporan Keuangan',
       href: '/admin/financial',
-      icon: BarChart,
+      icon: BarChart, 
       description: 'Monthly reports'
+    },
+    {
+      title: 'Laporan Penjualan & Omzet',
+      href: '/admin/sales-report',
+      icon: TrendingUp,
+      description: 'Sales & revenue'
     },
     {
       title: 'Konfirmasi Pesanan',
