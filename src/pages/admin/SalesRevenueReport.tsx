@@ -129,14 +129,6 @@ const SalesRevenueReport = () => {
         await fetchChartData();
       } catch (error) {
         console.error('Error fetching sales data:', error);
-        
-        // Set dummy data if there's an error or no data
-        if (salesData.totalOrders === 0) {
-          setSalesData({
-            totalOrders: Math.floor(Math.random() * 50) + 10,
-            totalRevenue: Math.floor(Math.random() * 1000000) + 100000
-          });
-        }
       } finally {
         setIsLoading(false);
       }
@@ -176,20 +168,12 @@ const SalesRevenueReport = () => {
           });
         });
         
-        // If no data, add dummy data
-        if (transactionData.length === 0) {
-          const dummyData = generateDummyTransactions(10);
-          setTransactions(dummyData);
-        } else {
-          setTransactions(transactionData);
-        }
+        setTransactions(transactionData);
         
         setIsLoadingTransactions(false);
       }, (error) => {
         console.error('Error fetching transactions:', error);
-        // Set dummy data on error
-        const dummyData = generateDummyTransactions(10);
-        setTransactions(dummyData);
+        setTransactions([]);
         setIsLoadingTransactions(false);
       });
       
@@ -197,33 +181,10 @@ const SalesRevenueReport = () => {
       return () => unsubscribe();
     } catch (error) {
       console.error('Error setting up transactions listener:', error);
-      // Set dummy data on error
-      const dummyData = generateDummyTransactions(10);
-      setTransactions(dummyData);
+      setTransactions([]);
       setIsLoadingTransactions(false);
     }
   }, []);
-  
-  // Generate dummy transaction data
-  const generateDummyTransactions = (count: number): Transaction[] => {
-    const dummyData: Transaction[] = [];
-    const names = ['Budi Santoso', 'Siti Rahayu', 'Ahmad Wijaya', 'Dewi Lestari', 'Joko Susilo'];
-    
-    for (let i = 0; i < count; i++) {
-      const date = new Date();
-      date.setDate(date.getDate() - Math.floor(Math.random() * 30));
-      
-      dummyData.push({
-        id: `order-${i + 1}`,
-        buyerName: names[Math.floor(Math.random() * names.length)],
-        shippingFee: Math.floor(Math.random() * 2000) + 500,
-        totalPayment: Math.floor(Math.random() * 10000) + 2000,
-        transactionDate: date.toISOString()
-      });
-    }
-    
-    return dummyData;
-  };
   
   // Fetch data for the chart (last 6 months)
   const fetchChartData = async () => {
@@ -257,12 +218,6 @@ const SalesRevenueReport = () => {
           revenue += order.total_price || 0;
         });
         
-        // If no data, use dummy data
-        if (orders === 0) {
-          orders = Math.floor(Math.random() * 50) + 5;
-          revenue = Math.floor(Math.random() * 1000000) + 50000;
-        }
-        
         chartData.push({
           name: monthName,
           orders: orders,
@@ -273,21 +228,7 @@ const SalesRevenueReport = () => {
       setChartData(chartData);
     } catch (error) {
       console.error('Error fetching chart data:', error);
-      
-      // Generate dummy chart data if there's an error
-      const dummyChartData: ChartData[] = [];
-      for (let i = 5; i >= 0; i--) {
-        const monthDate = subMonths(currentDate, i);
-        const monthName = format(monthDate, 'MMM', { locale: id });
-        
-        dummyChartData.push({
-          name: monthName,
-          orders: Math.floor(Math.random() * 50) + 5,
-          revenue: Math.floor(Math.random() * 1000000) + 50000
-        });
-      }
-      
-      setChartData(dummyChartData);
+      setChartData([]);
     }
   };
 
@@ -555,7 +496,7 @@ const SalesRevenueReport = () => {
                           <TableHead>ID Transaksi</TableHead>
                           <TableHead>Tanggal</TableHead>
                           <TableHead>Nama Pembeli</TableHead>
-                          <TableHead className="text-right">Ongkir</TableHead>
+                            {searchTerm ? 'Tidak ada transaksi yang sesuai dengan pencarian' : 'Belum ada data transaksi'}
                           <TableHead className="text-right">Total Pembayaran</TableHead>
                         </TableRow>
                       </TableHeader>
